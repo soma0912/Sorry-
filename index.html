@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sorry Babyyy 💗</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;overflow:hidden;font-family:'Patrick Hand',cursive}
+
+  .page{
+    position:fixed;inset:0;
+    display:flex;flex-direction:column;align-items:center;
+    padding:24px 20px 40px;
+    overflow-y:auto;
+    opacity:0;pointer-events:none;transition:opacity .9s ease;
+    background:linear-gradient(160deg,#ffe3ef,#ffd0e4 50%,#e8d4ff);
+  }
+  .page.active{opacity:1;pointer-events:auto}
+  .wrap{margin:auto;width:100%;max-width:430px;text-align:center}
+
+  .btn{
+    font-family:'Patrick Hand',cursive;font-size:22px;
+    padding:13px 34px;border:none;border-radius:50px;
+    background:#ff6fa5;color:#fff;
+    box-shadow:0 6px 18px rgba(255,111,165,.5);
+    cursor:pointer;transition:transform .15s;
+  }
+  .btn:active{transform:scale(.93)}
+  .pulse{animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+
+  h1{font-family:'Pacifico',cursive;color:#e0528a;font-size:32px;margin-bottom:14px;line-height:1.3}
+  .txt{font-size:24px;line-height:1.5;color:#5b3a4a;margin:12px 0}
+  .big{font-family:'Pacifico',cursive;font-size:28px;color:#e0528a;margin:18px 0;line-height:1.4}
+
+  /* PAGE 1 */
+  #p1{padding:0;justify-content:flex-end;background:linear-gradient(#2f8cf0,#8cc3ff 55%,#f5a3d6)}
+  #p1 .slot{position:absolute;inset:0}
+  #p1 .slot img{width:100%;height:100%;object-fit:cover}
+  #p1 .btn{position:relative;z-index:3;margin-bottom:48px;background:rgba(255,255,255,.92);color:#e0528a}
+
+  /* photo frames */
+  .slot{position:relative}
+  .slot img{display:block}
+  .frame{
+    width:min(80vw,320px);aspect-ratio:4/5;margin:0 auto;
+    background:#fff;border:9px solid #fff;border-radius:18px;
+    box-shadow:0 10px 26px rgba(200,80,130,.3);
+  }
+  .frame img{width:100%;height:100%;object-fit:cover;border-radius:10px}
+  .frame::before{
+    content:'💗';position:absolute;inset:0;display:flex;
+    align-items:center;justify-content:center;font-size:60px;
+    background:#ffe3ef;border-radius:10px;z-index:0;
+  }
+  .frame img{position:relative;z-index:1}
+  .addbtn{
+    position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:9;
+    background:#222;color:#fff;border:none;border-radius:20px;
+    padding:8px 16px;font-size:16px;font-family:sans-serif;opacity:.85;
+  }
+  #p1 .addbtn{top:20px;bottom:auto;left:20px;transform:none}
+  .cap{font-size:25px;color:#5b3a4a;margin:14px 0 26px}
+
+  /* PAGE 2 buttons */
+  .row{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:26px}
+  #yes{font-size:24px;padding:.5em 1.4em;transition:font-size .25s}
+  #no{background:#b9a3c4;box-shadow:none}
+
+  .fade{opacity:0;transform:translateY(12px);animation:fadeUp .8s forwards}
+  @keyframes fadeUp{to{opacity:1;transform:none}}
+
+  /* countdown */
+  .cd{display:flex;justify-content:center;gap:10px;margin:16px 0}
+  .cd div{background:rgba(255,255,255,.8);border-radius:16px;padding:10px 6px;min-width:68px;
+    box-shadow:0 6px 16px rgba(200,80,130,.2)}
+  .cd b{display:block;font-size:30px;color:#e0528a}
+  .cd span{font-size:15px;color:#5b3a4a}
+
+  /* PAGE 5 card */
+  .card{background:rgba(255,255,255,.75);backdrop-filter:blur(6px);border-radius:26px;
+    padding:28px 22px;box-shadow:0 10px 30px rgba(200,80,130,.25)}
+  .card p{font-size:21px;line-height:1.5;color:#5b3a4a;margin-bottom:12px;
+    opacity:0;transform:translateY(12px)}
+  #p5.active .card p{animation:fadeUp .8s forwards}
+  #p5 .card p:nth-of-type(1){animation-delay:.6s}
+  #p5 .card p:nth-of-type(2){animation-delay:1.8s}
+  #p5 .card p:nth-of-type(3){animation-delay:3s}
+  #p5 .card p:nth-of-type(4){animation-delay:4.2s}
+  #thanks{display:none;font-family:'Pacifico',cursive;font-size:24px;color:#e0528a;margin-top:14px}
+
+  .heart{position:fixed;bottom:-40px;animation:floatUp linear forwards;pointer-events:none;z-index:50}
+  @keyframes floatUp{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+
+  /* editor (only used with ?edit) */
+  #ed{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;display:none;
+    flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:sans-serif;color:#fff}
+  #edcv{background:#fde;border-radius:10px;touch-action:none}
+  #ed button,#ed label{background:#ff6fa5;color:#fff;border:none;border-radius:20px;padding:10px 20px;font-size:16px}
+  #ed .gray{background:#666}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 : intro photo -->
+<section class="page active" id="p1">
+  <div class="slot" data-slot="intro" data-ratio="0.5625"><img alt=""></div>
+  <button class="btn pulse" onclick="go(2)">Next 💌</button>
+</section>
+
+<!-- PAGE 2 : sorry + forgive me -->
+<section class="page" id="p2">
+  <div class="wrap">
+    <h1>sorry babyyyyyyy 🥺<br>plese forgive me</h1>
+    <div class="row">
+      <button class="btn" id="yes" onclick="go(3)">Okayy 💖</button>
+      <button class="btn" id="no" onclick="grow()">No</button>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 3 : thank you -->
+<section class="page" id="p3">
+  <div class="wrap">
+    <h1>Thankyou babyy 💞</h1>
+    <p class="txt">thankyou babyy for forgiving mee 🥹 i don't wanted to hurt you. I don't know why we can't talk much nowadays, it's from network problem. i am sorry babyy for thattt 💗</p>
+    <button class="btn pulse" style="margin-top:20px" onclick="go(4)">Next 💌</button>
+  </div>
+</section>
+
+<!-- PAGE 4 : love + photos + birthday -->
+<section class="page" id="p4">
+  <div class="wrap">
+    <h1>I love you soo much bubduuuuuu ❤️</h1>
+    <p class="txt">sorry if it hurted youuu 🥺</p>
+    <p class="big">You are mine 💍</p>
+
+    <div class="slot frame" data-slot="img1" data-ratio="0.8"><img alt=""></div>
+    <p class="cap">I love you 💕</p>
+
+    <div class="slot frame" data-slot="img2" data-ratio="0.8"><img alt=""></div>
+    <p class="cap">We are together 🫶</p>
+
+    <div class="slot frame" data-slot="img3" data-ratio="0.8"><img alt=""></div>
+    <p class="cap">I know it hurted you, i am sorry for that, i am sorry 🥺</p>
+
+    <p class="big">I love 💕 youuuuuuuu ❤️</p>
+    <p class="txt">Also your birthday is coming babyyyyyyy 🎂</p>
+    <h1>Advance happiest birthday 🎉</h1>
+
+    <div class="cd" id="cd">
+      <div><b id="cdD">0</b><span>days</span></div>
+      <div><b id="cdH">0</b><span>hours</span></div>
+      <div><b id="cdM">0</b><span>mins</span></div>
+      <div><b id="cdS">0</b><span>secs</span></div>
+    </div>
+    <p class="txt" id="cdMsg">until Dec 9 🎈</p>
+
+    <p class="big">I love you 😘</p>
+    <button class="btn pulse" style="margin-top:10px" onclick="go(5)">Next 💌</button>
+  </div>
+</section>
+
+<!-- PAGE 5 : old sorry message -->
+<section class="page" id="p5">
+  <div class="wrap">
+    <div class="card">
+      <h1>I'm Sorry 🥺</h1>
+      <p>I know we haven't talked for so many days, and I hate that distance between us.</p>
+      <p>I'm sorry for the silence, and for any moment I made you feel sad or ignored. You never deserve that.</p>
+      <p>Your smile is truly my most favorite thing in the world, and I miss it more than I can say. 💗</p>
+      <p>Can we talk again? I promise to do better, and to never let silence win. 🌸</p>
+      <button class="btn pulse" id="forgiveBtn" onclick="forgive()">Forgive me? 🥹</button>
+      <div id="thanks">Thank you, my love 💞<br>I love you so much!</div>
+    </div>
+  </div>
+</section>
+
+<!-- photo editor: only works with ?edit -->
+<div id="ed">
+  <canvas id="edcv"></canvas>
+  <label>Choose photo<input type="file" id="file" accept="image/*" hidden></label>
+  <input type="range" id="zoom" min="1" max="3" step="0.01" value="1" style="width:240px">
+  <div style="display:flex;gap:10px">
+    <button id="save">Save</button>
+    <button class="gray" id="cancel">Cancel</button>
+  </div>
+  <small>Drag to move, slider to zoom</small>
+</div>
+
+<script>
+  /* ---------- page navigation ---------- */
+  function go(n){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    const p=document.getElementById('p'+n);
+    p.classList.add('active'); p.scrollTop=0;
+    hearts(n===3?30:12);
+  }
+
+  /* ---------- Okayy gets bigger ---------- */
+  let size=24;
+  function grow(){
+    size=Math.min(size+10,110);
+    document.getElementById('yes').style.fontSize=size+'px';
+  }
+
+  function forgive(){
+    document.getElementById('forgiveBtn').style.display='none';
+    document.getElementById('thanks').style.display='block';
+    hearts(40);
+  }
+
+  function hearts(n){
+    const list=['💗','💖','💕','🌸','💞','🩷'];
+    for(let i=0;i<n;i++){
+      setTimeout(()=>{
+        const h=document.createElement('div');
+        h.className='heart';
+        h.textContent=list[Math.floor(Math.random()*list.length)];
+        h.style.left=Math.random()*100+'vw';
+        h.style.fontSize=(18+Math.random()*26)+'px';
+        h.style.animationDuration=(4+Math.random()*4)+'s';
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),8500);
+      },i*120);
+    }
+  }
+
+  /* ---------- countdown to Dec 9 2026 ---------- */
+  const target=new Date(2026,11,9,0,0,0);
+  function tick(){
+    let d=target-new Date();
+    if(d<=0){
+      document.getElementById('cd').style.display='none';
+      document.getElementById('cdMsg').textContent='🎂 Happy Birthday my loveee 🎂';
+      return;
+    }
+    const s=Math.floor(d/1000);
+    document.getElementById('cdD').textContent=Math.floor(s/86400);
+    document.getElementById('cdH').textContent=Math.floor(s%86400/3600);
+    document.getElementById('cdM').textContent=Math.floor(s%3600/60);
+    document.getElementById('cdS').textContent=s%60;
+  }
+  tick(); setInterval(tick,1000);
+
+  /* ---------- photo slots ---------- */
+  const EDIT=location.search.includes('edit');
+
+  function loadSlot(slot){
+    document.querySelectorAll('.slot[data-slot="'+slot+'"] img').forEach(img=>{
+      img.style.display='';
+      img.onerror=()=>{img.style.display='none'};
+      img.src='photos/'+slot+'.jpg?t='+Date.now();
+    });
+  }
+
+  document.querySelectorAll('.slot').forEach(s=>{
+    loadSlot(s.dataset.slot);
+    if(EDIT){
+      const b=document.createElement('button');
+      b.className='addbtn';
+      b.textContent='+ Add / adjust photo';
+      b.onclick=()=>openEd(s.dataset.slot,parseFloat(s.dataset.ratio));
+      s.appendChild(b);
+    }
+  });
+
+  /* ---------- editor (crop to frame, saves real file) ---------- */
+  const ed=document.getElementById('ed'),cv=document.getElementById('edcv'),cx=cv.getContext('2d');
+  let cur,im,zoom=1,ox=0,oy=0,ratio=1,drag=null;
+
+  function draw(c,cw,ch){
+    c.fillStyle='#fde';c.fillRect(0,0,cw,ch);
+    if(!im)return;
+    const s=Math.max(cw/im.width,ch/im.height)*zoom,dw=im.width*s,dh=im.height*s;
+    const mx=(dw-cw)/2/cw,my=(dh-ch)/2/ch;
+    ox=Math.max(-mx,Math.min(mx,ox));oy=Math.max(-my,Math.min(my,oy));
+    c.drawImage(im,(cw-dw)/2+ox*cw,(ch-dh)/2+oy*ch,dw,dh);
+  }
+  function redraw(){draw(cx,cv.width,cv.height)}
+
+  function openEd(slot,r){
+    cur=slot;ratio=r;im=null;zoom=1;ox=oy=0;
+    const w=Math.min(innerWidth*0.8,innerHeight*0.5*r,340);
+    cv.width=w;cv.height=w/r;
+    cv.style.width=w+'px';cv.style.height=(w/r)+'px';
+    document.getElementById('zoom').value=1;
+    ed.style.display='flex';redraw();
+  }
+
+  document.getElementById('file').onchange=e=>{
+    const f=e.target.files[0];if(!f)return;
+    const i=new Image();
+    i.onload=()=>{im=i;zoom=1;ox=oy=0;document.getElementById('zoom').value=1;redraw()};
+    i.src=URL.createObjectURL(f);
+    e.target.value='';
+  };
+  document.getElementById('zoom').oninput=e=>{zoom=parseFloat(e.target.value);redraw()};
+  cv.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId)};
+  cv.onpointermove=e=>{
+    if(!drag)return;
+    ox+=(e.clientX-drag.x)/cv.width;oy+=(e.clientY-drag.y)/cv.height;
+    drag={x:e.clientX,y:e.clientY};redraw();
+  };
+  cv.onpointerup=()=>drag=null;
+  document.getElementById('cancel').onclick=()=>ed.style.display='none';
+  document.getElementById('save').onclick=()=>{
+    if(!im){alert('Choose a photo first');return;}
+    const W=1080,H=Math.round(W/ratio),oc=document.createElement('canvas');
+    oc.width=W;oc.height=H;draw(oc.getContext('2d'),W,H);
+    oc.toBlob(b=>{
+      fetch('/upload?name='+cur,{method:'POST',body:b})
+        .then(r=>{if(!r.ok)throw 0;loadSlot(cur);ed.style.display='none';})
+        .catch(()=>alert('Save failed. Run python server.py (not http.server)'));
+    },'image/jpeg',0.88);
+  };
+</script>
+</body>
+</html>
